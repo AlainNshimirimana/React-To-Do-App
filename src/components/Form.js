@@ -1,16 +1,26 @@
 import React from 'react';
 
-const Form = ({setInputText}) => {
+const Form = ({inputText, setInputText, todos, setTodos}) => {
     //inputTextHandler that logs out what's been typed
     const inputTextHandler = (e) => {
         console.log(e.target.value);
         setInputText(e.target.value);
-    }
+    };
+
+    //submit to do handler. Basically submit the input text
+    const submitTodoHandler = (e) => {
+      e.preventDefault();
+      setTodos([
+        ...todos, {text: inputText, completed: false, id: Math.random() * 1000},
+      ]);
+      // set input text to an empty string, this way the input field clears automatically when you submit the input text
+      setInputText("");
+    };
 
     return(
     <form>
-      <input onChange={inputTextHandler} type="text" className="todo-input" />
-      <button className="todo-button" type="submit">
+      <input value={inputText} onChange={inputTextHandler} type="text" className="todo-input" />
+      <button onClick={submitTodoHandler} className="todo-button" type="submit">
         <i className="fas fa-plus-square"></i>
       </button>
       <div className="select">
